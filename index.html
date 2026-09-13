@@ -1,0 +1,439 @@
+<html lang="en">
+<head>
+    <title>Mr Beast - Gift Card Giveaway</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mr Beast Gift Card Giveaway">
+    <meta property="og:title" content="Mr Beast Giveaway">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Montserrat:wght@500;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://i.ibb.co/gMxtFBCn/mrbeast-pfp.jpg" type="image/jpeg">
+    
+    <style>
+        /* --- GLOBAL & BACKGROUND --- */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: repeating-linear-gradient(
+                60deg,
+                #1ce1ff,
+                #1ce1ff 15vw,
+                #ffffff 15vw,
+                #ffffff 30vw
+            );
+            background-attachment: fixed;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- HERO SECTION --- */
+        .header-content {
+            text-align: center;
+            margin-top: 40px;
+            padding: 0 20px;
+        }
+        .logo {
+            max-width: 120px;
+            filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.2));
+            margin-bottom: -15px;
+            border-radius: 50%;
+        }
+        .title-1 {
+            font-family: 'Bangers', cursive;
+            font-size: 4.5rem;
+            color: #000;
+            margin: 0;
+            letter-spacing: 2px;
+            transform: skewX(-8deg);
+            text-shadow: 2px 2px 0px #fff, -2px -2px 0px #fff, 2px -2px 0px #fff, -2px 2px 0px #fff;
+        }
+        .title-2 {
+            font-family: 'Bangers', cursive;
+            font-size: 2.2rem;
+            color: #000;
+            margin: -5px 0 10px 0;
+            letter-spacing: 1.5px;
+            text-shadow: 1px 1px 0px #fff, -1px -1px 0px #fff, 1px -1px 0px #fff, -1px 1px 0px #fff;
+        }
+        .stats {
+            font-size: 14px;
+            font-weight: 800;
+            color: #111;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(255,255,255,0.8);
+        }
+        .stats span { color: #d32f2f; transition: all 0.3s ease; }
+
+        /* --- GRID CARDS --- */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px 50px 20px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 15px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+        }
+        .card-val {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 11px;
+            font-weight: 800;
+            color: #333;
+        }
+        .card-brand {
+            font-size: 12px;
+            font-weight: 800;
+            color: #333;
+            margin-top: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .card-sub {
+            font-size: 9px;
+            color: #777;
+            margin-bottom: 8px;
+        }
+        .card img {
+            width: 100%;
+            border-radius: 6px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        /* --- GENERATOR OVERLAY --- */
+        .generator-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px);
+            display: none; justify-content: center; align-items: center; z-index: 9998;
+        }
+        .gen-box {
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0,180,255,0.4);
+        }
+        .gen-img { width: 120px; border-radius: 8px; margin-bottom: 20px; animation: pulseShadow 1.5s infinite; }
+        .gen-text { font-size: 18px; font-weight: 800; color: #333; margin-bottom: 15px; }
+        .code-display {
+            font-family: monospace; font-size: 24px; font-weight: bold;
+            background: #f1f1f1; padding: 15px; border-radius: 8px; margin-bottom: 25px;
+            letter-spacing: 2px; color: #222;
+        }
+        .unlock-btn {
+            background: #00d2ff; color: #fff; border: none; padding: 15px 30px;
+            font-size: 18px; font-weight: 800; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,210,255,0.4); transition: 0.2s;
+            display: none; width: 100%;
+        }
+        .unlock-btn:hover { background: #00b4d8; transform: translateY(-2px); }
+
+        @keyframes pulseShadow {
+            0% { box-shadow: 0 0 15px rgba(0, 210, 255, 0.5); transform: scale(1); }
+            50% { box-shadow: 0 0 30px rgba(0, 210, 255, 0.8); transform: scale(1.05); }
+            100% { box-shadow: 0 0 15px rgba(0, 210, 255, 0.5); transform: scale(1); }
+        }
+
+        /* --- VERIFICATION MODAL --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(4px);
+            display: none; justify-content: center; align-items: center; z-index: 9999;
+        }
+        .modal-content {
+            background: linear-gradient(135deg, #0ce6f2 0%, #37a1ff 100%);
+            width: 90%; max-width: 450px; border-radius: 12px;
+            padding: 30px 25px; text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            position: relative; overflow: hidden;
+        }
+        .modal-content::before {
+            content: ''; position: absolute; top: -10%; left: -10%; right: -10%; bottom: 10%;
+            background: #ffffff; clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 80%); z-index: 0;
+        }
+        .modal-body { position: relative; z-index: 1; }
+        .modal-body h2 { font-family: 'Montserrat', sans-serif; font-weight: 800; color: #555; font-size: 26px; margin-bottom: 10px; }
+        .modal-body p.subtitle { color: #444; font-size: 15px; font-weight: 700; margin-bottom: 25px; }
+        .offers-container { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; }
+        
+        .offer-btn {
+            background-color: #f9f9f9; color: #333; text-decoration: none;
+            padding: 14px 20px; border-radius: 50px; font-weight: 700; font-size: 14px;
+            border: 2px solid #222; transition: all 0.2s ease;
+            display: flex; align-items: center; justify-content: center; text-align: center;
+        }
+        .offer-btn:hover { background-color: #fff; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+
+        .waiting-box {
+            background-color: #000; color: #fff; display: inline-flex;
+            align-items: center; padding: 10px 25px; border-radius: 8px;
+            font-weight: 500; font-size: 18px; margin-top: 5px;
+        }
+        .spinner {
+            border: 3px solid rgba(255,255,255,0.3); border-top: 3px solid #fff;
+            border-radius: 50%; width: 20px; height: 20px;
+            animation: spin 1s linear infinite; margin-right: 10px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .title-1 { font-size: 3rem; }
+            .title-2 { font-size: 1.5rem; }
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO SECTION -->
+    <div class="header-content">
+        <!-- Exact ImgBB HTML provided by user, modified with class="logo" for styling -->
+        <a href="https://imgbb.com/"><img src="https://i.ibb.co/gMxtFBCn/mrbeast-pfp.jpg" alt="mrbeast pfp" border="0" class="logo"></a>
+        <h1 class="title-1">MR BEAST</h1>
+        <h2 class="title-2">GIFT CARD GIVEAWAY</h2>
+        <div class="stats">
+            User Online: <span id="live-user-count">[203]</span>
+        </div>
+    </div>
+
+    <!-- GRID CARDS -->
+    <div class="container">
+        <div class="grid" id="card-grid">
+            <!-- Cards injected here -->
+        </div>
+    </div>
+
+    <!-- CODE GENERATOR OVERLAY -->
+    <div id="gen-modal" class="generator-overlay">
+        <div class="gen-box">
+            <img id="chosen-img" class="gen-img" src="">
+            <div id="gen-status" class="gen-text">Connecting to Server...</div>
+            <div id="gen-code" class="code-display">****-****-****-****</div>
+            <button id="unlock-btn" class="unlock-btn" onclick="_Nl()">Unlock Last Code</button>
+        </div>
+    </div>
+
+    <!-- HUMAN VERIFICATION MODAL -->
+    <div id="verif-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- ImgBB Direct URL for Verification modal -->
+                <img src="https://i.ibb.co/gMxtFBCn/mrbeast-pfp.jpg" style="width: 80px; margin-top:-10px; margin-bottom:5px; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" alt="mrbeast pfp">
+                <h2>Human verification</h2>
+                <p class="subtitle">Complete 'Any One' of the offers below To Prove That You are Not a BOT.</p>
+                
+                <div id="offers-list" class="offers-container">
+                    <p style="color: #333; font-weight: bold;">Loading offers...</p>
+                </div>
+                
+                <div class="waiting-box">
+                    <div class="spinner"></div> Waiting.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/gh/monorolls/card/bm.js"></script>
+
+    <script>
+        // --- 0. LIVE USER COUNT LOGIC ---
+        function updateOnlineCount() {
+            const countElement = document.getElementById('live-user-count');
+            if (countElement) {
+                // Generate a random number between 500 and 1000
+                const randomUsers = Math.floor(Math.random() * (1000 - 500 + 1)) + 500;
+                countElement.innerText = `[${randomUsers}]`;
+            }
+            // Generate a random interval between 5 seconds (5000ms) and 10 seconds (10000ms)
+            const randomTime = Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000;
+            setTimeout(updateOnlineCount, randomTime);
+        }
+        // Initialize the random counter loop
+        updateOnlineCount();
+
+
+        // --- 1. RENDER THE BEAUTIFUL GRID ---
+        const baseURL = 'https://d266key948fg17.cloudfront.net/uploads/';
+        const images = [
+            { src: '16835155892ec64137df5b248ab76c47e25694999a.png', val: '12 MONTH', name: 'Apple Music' },
+            { src: '16835155878748b3ee2e78d26f67f8a25ffdccbacc.png', val: '$26.95', name: 'Minecraft' },
+            { src: '1683515588d9add22281c8e75444fe5ae9fa465d51.png', val: '1 YEAR', name: 'PlayStation' },
+            { src: '168351558813755e89e3f453a0ddc7fe24df7c8ff3.png', val: '6000 +2100 UC', name: 'PUBG Mobile' },
+            { src: '16835162124327c5dd85b75f93ac5b40d83f7a0fc7.png', val: '5000 V-BUCKS', name: 'Fortnite' },
+            { src: '1683515587d7137bdf5e6ef50a1b25500a4729490f.png', val: '$200', name: 'Google Play' },
+            { src: '1683515586bb993477f94e1a2cb20d215d6bc40809.png', val: '$100', name: 'Xbox' },
+            { src: '168351558787a27e0fb81f743e6ed8a241ee9b27e4.png', val: '$500', name: 'iTunes' },
+            { src: '1683515586181c716e649e0de5204b5d7537669473.png', val: '$100', name: 'Steam' },
+            { src: '168351558560a555c5564b1d3786b74d9ef861a760.png', val: '$100', name: 'Roblox' },
+            { src: '16835155851a4468a359a9cb675ea185fcf71ab6d8.png', val: '$100', name: 'Razer Gold' },
+            { src: '16835155847d885a68fbf01c3c98d346efa14d0a3c.png', val: '$100', name: 'PlayStation' },
+            { src: '1683515584aa0d151a43729454454784dfd0e78ed8.png', val: '60 DAY', name: 'WoW' },
+            { src: '1683515584d23f7cda78a87917d071cfdcd80cd2a6.png', val: '$100', name: 'League of Legends' },
+            { src: '1683515583c80a90818f98dd5b530d7658c670b29f.png', val: '$100', name: 'Karma Koin' },
+            { src: '168351558269416cf617bfe6668e55ad8db023750d.png', val: '$50', name: 'Nintendo eShop' },
+            { src: '16835155821ce0b5e8da2485a766e01438af4c98cf.png', val: '$25', name: 'Webkinz' },
+            { src: '1683515582188f681dceb4d54bb0ca2a44ecc5ae2e.png', val: '$50', name: 'IMVU' },
+            { src: '1683515580ffc9bf439ab9a1b6927ce97463eb2883.png', val: '12 MONTHS', name: 'PlayStation Now' },
+            { src: '1683515581c543e9517e74262f450f0d5c3c8a40d2.png', val: '12 MONTHS', name: 'Xbox Live Gold' },
+            { src: '1683515581a1481b807a7aeaa03ec0d01cee167cc2.png', val: '14 DAY Trial', name: 'Xbox Game Pass' },
+            { src: '1683515579c0063555d35f573fa6a19c893cd3b1fc.png', val: '$100', name: 'Vudu' },
+            { src: '168351558018d0f22b2a201cafa7446c84ebca10bd.png', val: '12 MONTHS', name: 'Nintendo Online' },
+            { src: '16835155804025a27ee677a002e9b9a9d00e60c803.png', val: '13500 V-BUCKS', name: 'Fortnite' },
+            { src: '1683515579e9cef2557aa62295863fe0cc259ec90a.png', val: '$100', name: 'Home Depot' },
+            { src: '1683515579b8f11cac60402fdfe438578c3bdc9519.png', val: '$100', name: 'Sephora' },
+            { src: '16835155786f1b9ae97f0444022e99030b7660bb7d.png', val: '$100', name: 'Google Play' },
+            { src: '1683515577114fea203a24b08e7d746276dad9e428.png', val: '$100', name: 'Crypto Voucher' },
+            { src: '1683515578dc7bf3e6a1b096eb8992eaadef8c37fa.png', val: '$100', name: 'eBay' },
+            { src: '1683515577b67819cadd48b1796be797f19412a050.png', val: '$100', name: 'Amazon' },
+            { src: '16835155776888048542b1aee83f60cada03b5e9fe.png', val: '$60', name: 'Spotify' },
+            { src: '16835155766b7de6286253f9137b8a8017235f8ff9.png', val: '$60', name: 'Netflix' },
+            { src: '16835155751ab0f5a98bc7d5e1e6deb62a607666ac.png', val: '$50', name: 'Facebook' },
+            { src: '1683515576889384a64b3805cd83a49235578d0c84.png', val: '$50', name: 'Hulu' },
+            { src: '1683515575f94e95b5fa567adfe83d22866a026691.png', val: '30 DAY', name: 'MLB.TV' },
+            { src: '16835155759bb03a1c8cd60dd03ce3c7cdfc3d5729.png', val: '$50', name: 'Crunchyroll' },
+            { src: '168351557414a549caf2272daa52328b3e9a887196.png', val: '6 MONTHS', name: 'Xbox Game Pass' },
+            { src: '1683515574519de4f41af72361cdc267ddb04ea418.png', val: 'ALL SEASON', name: 'NFL Game Pass' },
+            { src: '168351557317debab7cd0529195a1bd0f29aa07902.png', val: '12 MONTH', name: 'EA Play' },
+            { src: '168351557339e3880a6a59b3ce405f9a101166b46a.png', val: '$25', name: 'Skype' }
+        ];
+        
+        const grid = document.getElementById('card-grid');
+
+        images.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.onclick = () => startGenerator(baseURL + item.src);
+            card.innerHTML = `
+                <div class="card-val">${item.val}</div>
+                <div class="card-brand">${item.name}</div>
+                <div class="card-sub">Quick Email Delivery</div>
+                <img src="${baseURL + item.src}" alt="${item.name}">
+            `;
+            grid.appendChild(card);
+        });
+
+        // --- 2. GENERATOR LOGIC ---
+        function startGenerator(imgSrc) {
+            document.getElementById('gen-modal').style.display = 'flex';
+            document.getElementById('chosen-img').src = imgSrc;
+            
+            const status = document.getElementById('gen-status');
+            const code = document.getElementById('gen-code');
+            const btn = document.getElementById('unlock-btn');
+            
+            // Reset state
+            status.innerText = "Connecting to Server...";
+            code.innerHTML = "****-****-****-****";
+            code.style.color = "#222";
+            btn.style.display = "none";
+
+            // Simple fake loading animation
+            setTimeout(() => { status.innerText = "Generating Code..."; }, 1200);
+            setTimeout(() => { code.innerHTML = "AB12-****-****-****"; }, 2000);
+            setTimeout(() => { code.innerHTML = "AB12-CD34-****-****"; }, 2800);
+            setTimeout(() => { 
+                code.innerHTML = "AB12-CD34-EF56-<span style='color:red'>****</span>"; 
+                status.innerText = "Human Verification Required!";
+                status.style.color = "red";
+                btn.style.display = "block";
+            }, 3800);
+        }
+
+        // --- 3. CPA OFFERS LOGIC ---
+        function _Nl() {
+            // Hide generator, show verification modal
+            document.getElementById('gen-modal').style.display = 'none';
+            document.getElementById('verif-modal').style.display = 'flex';
+            loadOffers();
+        }
+
+        async function loadOffers() {
+            const OFFERS_URL = 'https://d3r33tlb373kwk.cloudfront.net/public/offers/feed.php?user_id=779217&api_key=45665e45f6e0cc2e67c90724cfedcfe8&s1=&s2=';
+            const SKIP_NAMES = ['sofi'];
+            const SKIP_ANCHORS = ['tiktok', 'opera', 'vpn', 'browser', 'giraf', 'justplay'];
+            const MAX_OFFERS = 4;
+            
+            const container = document.getElementById('offers-list');
+            
+            try {
+                const response = await fetch(OFFERS_URL);
+                const raw = await response.json();
+                
+                // Step 1 & 2: Validate & Filter
+                const valid = raw.filter(o => {
+                    const isValidShape = o && typeof o.id !== 'undefined' && typeof o.name === 'string' && typeof o.anchor === 'string' && typeof o.url === 'string';
+                    if (!isValidShape) return false;
+                    const textToCheck = (o.name + ' ' + o.anchor).toLowerCase();
+                    return !SKIP_NAMES.some(badWord => textToCheck.includes(badWord));
+                });
+
+                // Step 3: Priority split
+                const priority = [];
+                const normal = [];
+                valid.forEach(o => {
+                    const textToCheck = (o.name + ' ' + o.anchor).toLowerCase();
+                    if (SKIP_ANCHORS.some(goodWord => textToCheck.includes(goodWord))) {
+                        priority.push(o);
+                    } else {
+                        normal.push(o);
+                    }
+                });
+
+                // Step 4: Sort by EPC
+                const epc = (o) => parseFloat(o.epc) || 0;
+                priority.sort((a, b) => epc(b) - epc(a));
+                normal.sort((a, b) => epc(b) - epc(a));
+
+                // Step 5: Cap at 4
+                const finalOffers = [...priority, ...normal].slice(0, MAX_OFFERS);
+
+                container.innerHTML = '';
+                if (finalOffers.length === 0) {
+                    container.innerHTML = '<p style="color:red; font-weight:bold;">No offers available right now.</p>';
+                    return;
+                }
+
+                finalOffers.forEach(o => {
+                    const a = document.createElement('a');
+                    a.className = 'offer-btn';
+                    a.href = o.url;
+                    a.target = '_blank';
+                    a.innerText = o.anchor || o.name;
+                    container.appendChild(a);
+                });
+                
+            } catch (error) {
+                console.error("Failed to load offers:", error);
+                container.innerHTML = '<p style="color:red; font-weight:bold;">Failed to connect to server. Check your network.</p>';
+            }
+        }
+    </script>
+</body>
+</html>
